@@ -1,0 +1,112 @@
+/* Menus bar */
+/* SIDEBAR MENU for Mobile */
+/* inspiration - https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp */
+
+/* Don't show mobile menu on desktop */
+@media only screen and (min-width: 600px) {
+    #MobSidebar {
+      display: none;
+    }
+    #MobileOpenMenu {
+      display: none;
+    }
+  }
+  
+.sidebar {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20vw; /* Place content 20vw from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+  
+/* The sidebar links */
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 28px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When mouse over the navigation links, change their color */
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 50px; /* Size of Cross */
+  margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 40px;
+  cursor: pointer;
+  color: white;
+  border: none;
+  position: relative;
+  left: -40vw;
+  /* background-color: rgb(17, 66, 50); */
+  background-color: rgb(1, 34, 54);
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+/* To push the page content to the right when open the side navigation */
+#MobileOpenMenu {
+  transition: margin-left .5s; /* transition effect */
+  padding: 5px;
+}
+/* SIDEBAR MENU for Mobile - END */
+
+
+/* DESKTOP MENU */
+/* Don't show desktop menu on mobile */
+@media only screen and (max-width: 600px) {
+  #deskMenu {
+    display: none;
+  }
+}
+
+/* Navigation Menu - it turns unordered list in one row and makes menu beautiful */
+header nav ul {
+  display: flex;
+  /* Put menu words to the middle (horizontally) */
+  justify-content: center;
+  align-items: baseline;
+  margin: 0;
+  padding-left: 0;
+  line-height: normal;
+}
+
+/* To get rid of bullets in ul menu */
+header nav ul li {
+  list-style: none;
+}
+
+header nav ul a {
+  /* Remove underline styling */
+  text-decoration: none;
+  color: whitesmoke;
+  /* Make margins between menu words */
+  margin: 2vw;
+}
+
+/* mouse over link */
+a:hover {
+  color: hotpink;
+}
+/* DESKTOP MENU - end */

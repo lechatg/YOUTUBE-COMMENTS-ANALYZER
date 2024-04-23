@@ -1,0 +1,42 @@
+[
+    {
+        "number": "1",
+        "name": "How it works?",
+        "text": "For each comment in a sample we get its <b>embedding</b> (using BERTopic algorithm), and then based on distance between embeddings clusters are generated. So, similarity of comments in this context is all about semantics: it is calculated only based on their sense and similar words they have in common (and does not depend on author attributes, time, number of likes etc). For each cluster we take top-5 meaningful words, that form a topic name." 
+    },
+    {
+        "number": "2",
+        "name": "More about algorithm",
+        "text": "First of all, comments under given video are parsed using YouTube API. Then BERTopic algorithm is used, that we train on a sample of comments in order to get topics. <br><br>BERTopic algorithm in turn consists of several steps, first of them - to embed given comments using pre-trained <a href=\"https://www.sbert.net/docs/pretrained_models.html\">sentence-transformers model \"all-MiniLM-L6-v2\"</a>. Then - to cluster comments - i.e. to find groups of similar comments embeddings, HDBSCAN algorithm is used (default clustering algorithm in BERTopic). To achieve optimal number of clusters for each sample we use different minimal topic size, which is determined based on number of comments parsed (the larger a sample, the higher minimum number of comments is required for cluster to be formed). CountVectorizer is then used with stop_words=“english” parameter as we want to avoid uninformative words like (“and”, “the”, “him”) in our topic representation words, and Maximal Marginal Relevance algorithm with diversity=0.4 is used to reduce a little bit the number of duplicate words in our topics. <br><br>If you want to go deeper, please visit wonderful <a href=\"https://maartengr.github.io/BERTopic/algorithm/algorithm.html\">BERTopic page</a>." 
+    },
+    {
+        "number": "3",
+        "name": "Optimal number of comments for analysis",
+        "text": "Empirically it usually works best on videos with <b>1000+ comments</b>. However, value of the resulting topics depends not only on the number of comments, but also on how much they differ, so the most informative results are obtained on videos under which there are discussions of different topics or polar opinions, even though they may have relatively small number of comments." 
+    },
+    {
+        "number": "4",
+        "name": "For whom this may be helpful?",
+        "text": "Whether you are a content-maker who wants to save time analysing comments under your videos, or let's say you make some marketing and want to check information about a product that has video review about it - you are welcome to almost instantly find aggregated topics/opinions discussed in comments under Youtube video using this web-service." 
+    },
+    {
+        "number": "5",
+        "name": "Does it work with languages other than english?",
+        "text": "As of now, it only works well with comments in English, so if you try it on video with mostly non-english comments then you'll probably get just single uninformative topic with all comments on that other language. However, I have plans to integrate multilingual model as well, so stay tuned. " 
+    },
+    {
+        "number": "6",
+        "name": "Why my results differ from time to time for the same video?",
+        "text": "Due to stochastic nature of the clustering algorithm results indeed may differ a little bit in different runs. It allows you to experiment until you get the topics that look best to you, though empirically for videos with good number of comments (>1000) results are pretty consistent." 
+    },
+    {
+        "number": "7",
+        "name": "Can I see my previous results?",
+        "text": "As for now, you can only access your last generated result - based on the last video that you searched for." 
+    },
+    {
+        "number": "8",
+        "name": "Why does it take so long?",
+        "text": "Time it takes depends on number of comments parsed, so for video with 2000 comments parsed it takes ~30 sec (and most of this time is required for calculation of comments embeddings). <br><br>If you're in hurry and just want to try it fast, you can try it on a video with small number of comments (<100), in that case it'll be much faster." 
+    }
+]

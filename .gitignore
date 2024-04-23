@@ -1,0 +1,5 @@
+__pycache__/
+flask_session/
+Venv_for_Final_Pr/
+.DS_Store
+for_heroku/

@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block particles %}
+    <div id="particles-js"></div>
+{% endblock %}
+
+{% block main %}
+    <div class="section">
+        <div class="info_and_video">
+            <div class="left_right_box left_box">
+                    <h2 class="section_heading" id="Video_name_cont">Video name: <a href="{{user_dict.link}}" class="video_name_link">{{ user_dict.video_name }}</a></h2>
+                    <div class="section_number_of_comments">
+                        <h2>Total number of comments for this video: <b class="number_pink">{{ user_dict.comments_number }}</b></h2>
+                        <div class="text_about_number">For our analysis we use only first comments in threads, so replies do not count</div>
+                        <div class="text_about_number">Keep in mind that due to quota limitations maximum number of comments per video that we use is 2000</div>
+                    </div>
+            </div>
+            
+            <div class="left_right_box">
+                <iframe width="640" height="360" style="display: block; margin-left: auto; margin-right: auto;" src="https://www.youtube.com/embed/{{user_dict.video_id}}"></iframe>
+            </div>
+        </div>
+
+        <h2 class="section_heading">TOP 10 liked comments</h2>
+        <div class="top_comments_table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Comment Text</th>
+                    <th>Author</th>
+                    <th>Number of likes</th>
+                    <th>Number of replies</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through entries to display them in this table -->
+                {% set entries = user_dict.entries %}
+                {% for index, row in entries.iterrows(): %}
+                <tr>
+                    <td>{{ row['comment_text'] }}</td>
+                    <td class="td_centered">{{ row['author_name'] }}</td>
+                    <td class="td_centered">{{ row['likes'] }}</td>
+                    <td class="td_centered">{{ row['replies'] }}</td> 
+                </tr>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <br>
+
+    <h2 class="section_heading">TOP 10 TOPICS DISCUSSED IN COMMENTS</h2>
+    <div class="section_plot_for_bar_chart">
+        <div>{{ user_dict.bar_chart|safe }}</div>
+    </div>
+
+    <h2 class="section_heading">CLUSTERS OF COMMENTS</h2>
+    <div class="section_plot">
+        <div>{{ user_dict.fig|safe }}</div>
+    </div>
+
+
+    <h2 class="section_heading">TOPICS TABLE</h2>
+    <div class="topics_table">
+    <table>
+        <thead>
+            <tr>
+                <th>Topic # and Keywords</th>
+                <th>Number of comments</th>
+                <!-- <th>Representation</th> -->
+                <th>Representative comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- From topic#1 - get topics data -->
+            {% for index, row in user_dict.topics_table[1:].iterrows(): %}
+            <tr>
+                <td>{{ row['Name_for_table'] }}</td>
+                <td class="td_centered">{{ row['Count'] }}</td>
+                <!-- <td>{{ row['Representation'] }}</td> -->
+                <td>{% for i in range(3): %}
+                    {% if row['Representative_Docs'][i] %}
+                            {{ row['Representative_Docs'][i][:200] }}
+                            {% if row['Representative_Docs'][i]|length >= 200 %}...
+                            {% endif %} 
+                            <br>
+                            <br>
+                    {% endif %} 
+                    {% endfor %}
+                </td> 
+            </tr>
+            {% endfor %}
+
+            <!-- Get zero row from table data (Undistributed comments) -->
+            {% set zer_row = user_dict.topics_table.iloc[0] %}
+            
+            <tr>
+                <td>{{ zer_row['Name_for_table'] }}</td>
+                <td class="td_centered">{{ zer_row['Count'] }}</td>
+                <!-- <td>{{ zer_row['Representation'] }}</td> -->
+                <td>{% for i in range(3): %}
+                    {% if zer_row['Representative_Docs'][i] %}
+                            {{ zer_row['Representative_Docs'][i][:200] }}
+                            {% if zer_row['Representative_Docs'][i]|length >= 200 %}...
+                            {% endif %} 
+                            <br>
+                            <br>
+                    {% endif %}
+                    {% endfor %}
+                </td> 
+            </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

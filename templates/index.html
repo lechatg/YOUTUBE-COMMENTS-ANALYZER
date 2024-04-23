@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block addhead %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/loader.css') }}">
+{% endblock %}
+
+{% block particles %}
+    <!-- This is background animation. Here and on other pages source is https://github.com/VincentGarreau/particles.js/ -->
+    <div id="particles-js"></div>
+{% endblock %}
+
+{% block main %}
+    <div class="text_cont_1">
+        <p class="text_big">YOUTUBE COMMENTS ANALYZER</p>
+        <br>
+        <br>
+        <p class="text_small">This web app allows you to dive into comments to a given Youtube Video. 
+            <br>Quickly analyse hundreds and thousands of comments and see key topics of what people think about the video with help of ML based clustering model.</p>
+    </div>
+    <form class="s_form" action="/" method="post">
+        <input class="search_bar" autocomplete="off" autofocus name="given_link" placeholder="Youtube link: https://www.youtube.com/watch?v=" type="text">
+        <button type="submit" id="buttonForSubmit">Analyze</button>
+    </form>
+    
+    <div id="PlaceForError">
+        {% if check_failed == 410 %}This does not look like YouTube link. Please, try again!
+        {% elif check_failed == 420 %}This is not a valid YouTube link. Please, try again!
+        {% endif %}
+    </div>
+    <div class="wait_container">
+
+        <!-- Source for loader: https://codepen.io/bojankrsmanovic/pen/dpzeZm -->
+        <div class="wrapper" id="loaderblocks" style="display: none">
+            <div class="box-wrap">
+                <div class="box one"></div>
+                <div class="box two"></div>
+                <div class="box three"></div>
+                <div class="box four"></div>
+                <div class="box five"></div>
+                <div class="box six"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('buttonForSubmit').onclick = function() {
+                // In case user typed "youtube-look-like" link - show wait message and hide error message (if there were previous unsuccessful attempts)
+                document.querySelector('#PlaceForError').style.display = "none";
+                document.querySelector('#buttonForSubmit').innerHTML = 'Please wait\n(up to 30s)';
+                document.querySelector('#buttonForSubmit').style.color = 'rgb(84, 208, 136)';
+                document.querySelector('#buttonForSubmit').style.fontSize = '2.2vh';
+                document.querySelector('#loaderblocks').style.display = "block";
+            }
+        
+        })
+    </script>
+{% endblock %}
