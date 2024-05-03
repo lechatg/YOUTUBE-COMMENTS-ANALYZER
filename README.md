@@ -1,10 +1,10 @@
 # YOUTUBE COMMENTS ANALYZER
 
-This web app lets you analyze hundreds or thousands of comments on a YouTube video, revealing key topics using a semantic similarity ML model.
+This web app lets you analyze thousands of comments on a YouTube video, revealing key topics using a semantic similarity ML model.
 
 
 
-![description](images_for_readme/cover.png)
+![description](images_for_readme/cover_demo.png)
 
 Video Demo: https://www.youtube.com/watch?v=QOt2XtJAIzU
 
